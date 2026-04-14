@@ -1,5 +1,16 @@
 {
+  "version": 2,
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/health",           "destination": "/api/index" },
+    { "source": "/auth/:path*",      "destination": "/api/index" },
+    { "source": "/meals/:path*",     "destination": "/api/index" },
+    { "source": "/nutrition/:path*", "destination": "/api/index" },
+    { "source": "/dailylog/:path*",  "destination": "/api/index" },
+    { "source": "/progress/:path*",  "destination": "/api/index" },
+    { "source": "/dietplan/:path*",  "destination": "/api/index" },
+    { "source": "/workouts/:path*",  "destination": "/api/index" },
+    { "source": "/(.*)",             "destination": "/index.html" }
+  ]
 }
