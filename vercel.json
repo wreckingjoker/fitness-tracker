@@ -1,16 +1,26 @@
 {
   "version": 2,
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "rewrites": [
-    { "source": "/health",           "destination": "/api/index" },
-    { "source": "/auth/:path*",      "destination": "/api/index" },
-    { "source": "/meals/:path*",     "destination": "/api/index" },
-    { "source": "/nutrition/:path*", "destination": "/api/index" },
-    { "source": "/dailylog/:path*",  "destination": "/api/index" },
-    { "source": "/progress/:path*",  "destination": "/api/index" },
-    { "source": "/dietplan/:path*",  "destination": "/api/index" },
-    { "source": "/workouts/:path*",  "destination": "/api/index" },
-    { "source": "/(.*)",             "destination": "/index.html" }
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/health",             "dest": "/api/index.js" },
+    { "src": "/auth/(.*)",          "dest": "/api/index.js" },
+    { "src": "/meals/(.*)",         "dest": "/api/index.js" },
+    { "src": "/nutrition/(.*)",     "dest": "/api/index.js" },
+    { "src": "/dailylog/(.*)",      "dest": "/api/index.js" },
+    { "src": "/progress/(.*)",      "dest": "/api/index.js" },
+    { "src": "/dietplan/(.*)",      "dest": "/api/index.js" },
+    { "src": "/workouts/(.*)",      "dest": "/api/index.js" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)",               "dest": "/index.html" }
   ]
 }
