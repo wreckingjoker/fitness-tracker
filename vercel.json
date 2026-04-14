@@ -2,25 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    },
-    {
       "src": "api/index.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["client/dist/**"] }
     }
   ],
   "routes": [
-    { "src": "/health",             "dest": "/api/index.js" },
-    { "src": "/auth/(.*)",          "dest": "/api/index.js" },
-    { "src": "/meals/(.*)",         "dest": "/api/index.js" },
-    { "src": "/nutrition/(.*)",     "dest": "/api/index.js" },
-    { "src": "/dailylog/(.*)",      "dest": "/api/index.js" },
-    { "src": "/progress/(.*)",      "dest": "/api/index.js" },
-    { "src": "/dietplan/(.*)",      "dest": "/api/index.js" },
-    { "src": "/workouts/(.*)",      "dest": "/api/index.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)",               "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/api/index.js" }
   ]
 }

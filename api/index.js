@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const { db } = require("../server/services/sheetsDb");
 
 const authRoutes = require("../server/routes/auth");
@@ -38,5 +39,12 @@ app.use("/dailylog", dailylogRoutes);
 app.use("/progress", progressRoutes);
 app.use("/dietplan", dietplanRoutes);
 app.use("/workouts", workoutsRoutes);
+
+// Serve React build (production)
+const distPath = path.join(__dirname, "../client/dist");
+app.use(express.static(distPath));
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
+});
 
 module.exports = app;
