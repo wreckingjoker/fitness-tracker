@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "/" });
+// In dev, Vite proxies API calls to localhost:4000.
+// In production, set VITE_API_URL to your deployed backend URL (e.g. Railway).
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || "/" });
 
 // Attach JWT token from localStorage to every request
 api.interceptors.request.use((config) => {
