@@ -1,4 +1,4 @@
-import { deleteMeal } from "../lib/api";
+import { deleteMeal } from "../lib/store";
 
 const MEAL_ICONS = { breakfast: "🌅", lunch: "☀️", dinner: "🌙", snack: "🥜" };
 const MEAL_COLORS = {
@@ -9,9 +9,9 @@ const MEAL_COLORS = {
 };
 
 export default function MealCard({ meal, onDelete }) {
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!confirm("Remove this meal?")) return;
-    await deleteMeal(meal.id);
+    deleteMeal(meal.id);
     onDelete?.();
   };
 

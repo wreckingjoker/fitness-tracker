@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { logMeal } from "../lib/api";
+import { addMeal } from "../lib/store";
 import { useDailyLog } from "../hooks/useDailyLog";
 import MealCard from "../components/MealCard";
 
@@ -20,12 +20,30 @@ export default function MealLogger() {
     setError(null);
     setResult(null);
     try {
-      const data = await logMeal(description.trim(), mealType);
-      setResult(data);
+      const resp = await fetch("/api/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: description.trim() }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || "Extraction failed");
+
+      const meal = addMeal({
+        meal_type: mealType,
+        description: description.trim(),
+        items: data.items,
+        total_kcal: Math.round(data.totals.calories),
+        protein_g: data.totals.protein_g,
+        carbs_g: data.totals.carbs_g,
+        fat_g: data.totals.fat_g,
+        fiber_g: data.totals.fiber_g,
+      });
+
+      setResult({ meal, totals: data.totals });
       setDescription("");
       refetch();
     } catch (err) {
-      setError(err.response?.data?.error || err.message);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -41,16 +59,10 @@ export default function MealLogger() {
           <label className="text-xs font-medium text-gray-500 uppercase tracking-wider block mb-2">Meal Type</label>
           <div className="flex gap-2 flex-wrap">
             {MEAL_TYPES.map((t) => (
-              <button
-                type="button"
-                key={t}
-                onClick={() => setMealType(t)}
+              <button type="button" key={t} onClick={() => setMealType(t)}
                 className={`px-4 py-2 rounded-lg text-sm capitalize font-medium transition-colors cursor-pointer ${
-                  mealType === t
-                    ? "bg-green-500 text-white"
-                    : "bg-slate-100 text-gray-600 hover:bg-slate-200"
-                }`}
-              >
+                  mealType === t ? "bg-green-500 text-white" : "bg-slate-100 text-gray-600 hover:bg-slate-200"
+                }`}>
                 {t}
               </button>
             ))}
@@ -68,22 +80,17 @@ export default function MealLogger() {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading || !description.trim()}
-          className="w-full bg-green-500 hover:bg-green-600 disabled:bg-slate-100 disabled:text-slate-400 text-white font-semibold py-3 rounded-lg transition-colors cursor-pointer"
-        >
+        <button type="submit" disabled={loading || !description.trim()}
+          className="w-full bg-green-500 hover:bg-green-600 disabled:bg-slate-100 disabled:text-slate-400 text-white font-semibold py-3 rounded-lg transition-colors cursor-pointer">
           {loading ? "Extracting nutrition with Gemini..." : "Log Meal"}
         </button>
 
-        {error && (
-          <p className="text-red-600 text-sm mt-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2">{error}</p>
-        )}
+        {error && <p className="text-red-600 text-sm mt-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2">{error}</p>}
       </form>
 
       {result && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-5 mb-6">
-          <h3 className="text-sm font-semibold text-green-700 mb-3">✓ Logged — {result.totals?.calories} kcal</h3>
+          <h3 className="text-sm font-semibold text-green-700 mb-3">✓ Logged — {Math.round(result.totals?.calories)} kcal</h3>
           <div className="space-y-1 mb-3">
             {result.meal?.items?.map((item, i) => (
               <div key={i} className="flex justify-between text-sm">

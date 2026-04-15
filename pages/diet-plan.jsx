@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getWeeklyDietPlan } from "../lib/api";
+const getWeeklyDietPlan = () => fetch("/api/dietplan/weekly").then((r) => r.json());
 
 const MEAL_LABELS = { breakfast: "🌅 Breakfast", lunch: "☀️ Lunch", dinner: "🌙 Dinner", snack: "🥜 Snack" };
 

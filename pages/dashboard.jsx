@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useDailyLog } from "../hooks/useDailyLog";
-import { getDailyLogHistory } from "../lib/api";
+import { getDailyHistory } from "../lib/store";
 import StatCard from "../components/StatCard";
 import MacroBar from "../components/MacroBar";
 import MealCard from "../components/MealCard";
@@ -43,9 +43,7 @@ export default function Dashboard() {
   const [weekHistory, setWeekHistory] = useState([]);
 
   useEffect(() => {
-    getDailyLogHistory(7)
-      .then((data) => setWeekHistory(Array.isArray(data) ? data : []))
-      .catch(() => setWeekHistory([]));
+    setWeekHistory(getDailyHistory(7));
   }, []);
 
   if (loading) return (

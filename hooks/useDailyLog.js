@@ -1,29 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
-import { getDailyLog, getTodayMeals, updateWater } from "../lib/api";
+import { getTodayMeals, getTodayTotals, getWater, saveWater } from "../lib/store";
+
+const TARGETS = {
+  target_kcal: 1850, protein_target_g: 150,
+  carbs_target_g: 200, fat_target_g: 55,
+  fiber_target_g: 30, water_target: 8,
+};
 
 export function useDailyLog() {
   const [log, setLog] = useState(null);
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
 
-  const fetchAll = useCallback(async () => {
-    try {
-      setLoading(true);
-      const [logData, mealsData] = await Promise.all([getDailyLog(), getTodayMeals()]);
-      setLog(logData);
-      setMeals(Array.isArray(mealsData) ? mealsData : []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const fetchAll = useCallback(() => {
+    const totals = getTodayTotals();
+    const water = getWater();
+    const todayMeals = getTodayMeals();
+    setLog({ ...totals, water_glasses: water, targets: TARGETS });
+    setMeals(todayMeals);
+    setLoading(false);
   }, []);
 
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
-  const setWater = async (glasses) => {
-    await updateWater(glasses);
+  const setWater = (glasses) => {
+    saveWater(glasses);
     setLog((prev) => ({ ...prev, water_glasses: glasses }));
   };
 
