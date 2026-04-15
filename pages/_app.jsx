@@ -1,6 +1,8 @@
-import Sidebar from "../components/Sidebar";
-import BottomNav from "../components/BottomNav";
+import dynamic from "next/dynamic";
 import "../styles/globals.css";
+
+const Sidebar = dynamic(() => import("../components/Sidebar"), { ssr: false });
+const BottomNav = dynamic(() => import("../components/BottomNav"), { ssr: false });
 
 export default function App({ Component, pageProps }) {
   return (
