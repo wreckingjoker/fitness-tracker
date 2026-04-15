@@ -61,7 +61,7 @@ export default function Workouts() {
           </datalist>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 mb-4">
           {[
             { key: "sets", label: "Sets", placeholder: "4" },
             { key: "reps", label: "Reps", placeholder: "10" },

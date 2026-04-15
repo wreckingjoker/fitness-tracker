@@ -88,7 +88,7 @@ export default function Progress() {
 
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-100 p-6 mb-6 shadow-sm">
         <h3 className="text-sm font-semibold text-gray-800 mb-4">Log Body Measurement</h3>
-        <div className="grid grid-cols-2 gap-4 mb-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
           {[
             { key: "weight_kg", label: "Weight (kg)", placeholder: "68.5" },
             { key: "waist_cm", label: "Waist (cm)", placeholder: "82" },

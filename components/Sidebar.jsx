@@ -13,7 +13,7 @@ export default function Sidebar() {
   const router = useRouter();
 
   return (
-    <aside className="fixed top-0 left-0 h-full w-60 bg-white border-r border-slate-100 flex flex-col z-20 shadow-sm">
+    <aside className="hidden lg:flex fixed top-0 left-0 h-full w-60 bg-white border-r border-slate-100 flex-col z-20 shadow-sm">
       <div className="p-5 bg-gradient-to-br from-green-500 to-green-600">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center text-base">🥥</div>

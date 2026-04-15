@@ -69,15 +69,30 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="mb-7">
-        <h2 className="text-2xl font-bold text-gray-900">{greeting}, Shon 👋</h2>
+      {/* Mobile top bar */}
+      <div className="lg:hidden flex items-center justify-between mb-5 -mx-4 -mt-4 px-4 pt-4 pb-4 bg-gradient-to-r from-green-500 to-green-600">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center text-sm">🥥</div>
+          <div>
+            <p className="text-xs font-bold text-white leading-tight">FitTrack Kerala</p>
+            <p className="text-xs text-green-100">1850 kcal / day</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <p className="text-xs font-semibold text-white">Shon</p>
+          <p className="text-xs text-green-100">{new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</p>
+        </div>
+      </div>
+
+      <div className="mb-5">
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-900">{greeting}, Shon 👋</h2>
         <p className="text-gray-400 text-sm mt-0.5">
           {new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })}
         </p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-2xl border border-slate-100 border-t-4 border-t-green-500 p-5 shadow-sm flex flex-col items-center justify-center">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="col-span-2 lg:col-span-1 bg-white rounded-2xl border border-slate-100 border-t-4 border-t-green-500 p-5 shadow-sm flex flex-col items-center justify-center">
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3 self-start">Calories</p>
           <CalorieRing current={log?.total_kcal || 0} target={kcalTarget} />
         </div>
@@ -86,7 +101,7 @@ export default function Dashboard() {
         <StatCard label="Fat" value={Math.round(log?.total_fat_g || 0)} unit="g" sub={`Target: ${targets.fat_target_g || 55}g`} color="purple" />
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="space-y-4">
           <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
             <h3 className="text-sm font-semibold text-gray-800 mb-5">Macro Breakdown</h3>
@@ -99,7 +114,7 @@ export default function Dashboard() {
           <WaterTracker glasses={log?.water_glasses || 0} target={targets.water_target || 8} onToggle={setWater} />
         </div>
 
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-gray-800">Today's Meals</h3>
             <Link href="/log" className="text-xs text-green-600 hover:text-green-700 font-medium transition-colors">+ Log meal</Link>
