@@ -408,6 +408,16 @@ All macro bars use `(actual / target) * 100` for fill width. Bars cap at 100% vi
 
 ---
 
+## Skills
+
+| Skill | Trigger | Description |
+|---|---|---|
+| `/vercel-deploy` | "deploy to Vercel", "push to production", "fix Vercel error" | Pre-flight checks, env var checklist, deploy steps, error diagnosis |
+| `/build-step` | "build X page", "what to build next" | Implements FitTrack build order steps |
+| `/gemini-service` | "fix Gemini", "wire AI logger" | Implements/fixes geminiService.js |
+
+---
+
 ## How to Use This File with Claude Code (VS Code)
 
 - **Start a session**: `"Follow CLAUDE.md and begin with Step 1 of the Build Order"`
