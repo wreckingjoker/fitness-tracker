@@ -152,10 +152,14 @@ export default function Dashboard() {
           </div>
           <p className="text-xs text-gray-400 mb-4">Daily intake vs {kcalTarget} kcal target</p>
           <ResponsiveContainer width="100%" height={160}>
-            <BarChart data={weekHistory.map((h) => ({
-              date: new Date(h.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric" }),
-              calories: parseInt(h.total_kcal) || 0,
-            }))} barSize={24}>
+            <BarChart
+              data={weekHistory.map((h) => ({
+                date: new Date(h.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric" }),
+                calories: parseInt(h.total_kcal) || 0,
+              }))}
+              barSize={28}
+              style={{ background: "#fff" }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
               <XAxis dataKey="date" tick={{ fill: "#94a3b8", fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} width={40} axisLine={false} tickLine={false} />
@@ -164,7 +168,7 @@ export default function Dashboard() {
                 formatter={(v) => [`${v} kcal`, "Calories"]}
               />
               <ReferenceLine y={kcalTarget} stroke="#22c55e" strokeDasharray="4 4" strokeWidth={1.5} />
-              <Bar dataKey="calories" fill="#bbf7d0" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="calories" fill="#22c55e" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

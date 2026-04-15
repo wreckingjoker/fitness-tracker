@@ -224,10 +224,10 @@ export default function Progress() {
                 </div>
                 <p className="text-xs text-gray-400 mb-4">Target: 1850 kcal/day</p>
                 <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={nutritionChartData} barSize={20}>
+                  <BarChart data={nutritionChartData} barSize={20} style={{ background: "#fff" }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                    <XAxis dataKey="date" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                    <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} width={45} />
+                    <XAxis dataKey="date" tick={{ fill: "#94a3b8", fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} width={45} axisLine={false} tickLine={false} />
                     <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} kcal`, "Calories"]} />
                     <ReferenceLine y={1850} stroke="#22c55e" strokeDasharray="4 4" strokeWidth={1.5} label={{ value: "Target", fill: "#22c55e", fontSize: 11, position: "right" }} />
                     <Bar dataKey="calories" name="Calories" fill="#22c55e" radius={[4, 4, 0, 0]} />
