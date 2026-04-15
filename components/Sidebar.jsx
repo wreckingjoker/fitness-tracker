@@ -55,15 +55,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="p-4 border-t border-slate-100">
-        <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-          <span>68.5 kg · 175 cm · 23 yrs</span>
-        </div>
-        <button
-          onClick={() => { localStorage.removeItem("token"); router.push("/login"); }}
-          className="w-full text-xs text-gray-400 hover:text-red-500 transition-colors cursor-pointer text-left py-1"
-        >
-          Sign out →
-        </button>
+        <span className="text-xs text-gray-400">68.5 kg · 175 cm · 23 yrs</span>
       </div>
     </aside>
   );
